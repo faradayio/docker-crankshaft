@@ -1,12 +1,11 @@
 import unittest
-
-from mock_plpy import MockPlPy
-plpy = MockPlPy()
-
+import os
 import sys
+from mock_plpy import MockPlPy
+
+plpy = MockPlPy()
 sys.modules['plpy'] = plpy
 
-import os
 
 def fixture_file(name):
     dir = os.path.dirname(os.path.realpath(__file__))
