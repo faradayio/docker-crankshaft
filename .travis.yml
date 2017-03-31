@@ -3,6 +3,10 @@ language: c
 env:
   global:
     - PAGER=cat
+    - secure: "jBQT4bDzIUP8g2j2haS1odNqI50TIJX+BprBvmH7oIG3tjtJydbzN1bpxtUGvcq0j+35PgTSQG9H8WYyXbfKiWUasS9nk7rO5j3a0w46LS+yEZTnTZOY0xVkvfW4QD/GEfR7FQCrWipYU9EFdnNzMGCYJ+77xpn+abz9qdRkQ7YaDJxzUUvVBR5hQOtXMxdt+dW6dnrYjz0P4F26eLyKFX2w6FIC41F66i3PX09NluxpTQmI8P3CUOA6y4aJNKAL2G8B+jMtQFQbQWPRXO2JCgtOEPtmymhnOHsMPgS/NhZzk4PsgMIrqV2P/7uaFU4YQ/++75GqcUKHoc3B7TvKJHgL/fkZ6mzaF4lrUvOlhMW0TPn2an4A+Gon062rHurki9J7xra9Bwg3M/+Tst6oFBImW/RyRUsV2R7xDCPUO+PPzMeNCcD8ZzJvsn5Cx0JBrXjzXWdvbua2N+4/94d4o16MSsFX7r89DnNYmb4yEyhKfMhQKOLzDFlN9dhgFd1Gnloc5dp3I+O0wpY2DDrdew1RdXS8lleYTsqkXDm+GOGMhtA/EMZdELTnu3OnjMdEyNh1mK1uWrb0xtkNGk7S9oH0Z0Ni/TJmWoVcvSNOTrsbFsLo26JD+8e2UdldrTULo1+x8s+J0kw5LBmsFhzJ+gRLZ9boJhl9+LJOvw7c1/o=" # DOCKER_EMAIL
+    - secure: "Pp5gZnU2UBY5uMy4Fce00IaPG1aBdCAgCuBla89GI51z5E7ADg0cjtPC4m2hX4fNP8Dr+HRnH3pnOtjzA924eOGKdmJgGbneaMp7d2oxkIVt5lMXH41qCkrkDjt1iO4qOrmEWbPvD1mMM6hvaGpdXZdU6sW48E0j/8aAiWyL2pj/KlMO9LgDdTLrltObYanwXVTmJTgR/ygu28MeKHArEsjBMSlHURrge6zb3EKGz6v7jSriNJH74RmnBmc/YnppBnd3/AIfbuXfcbTy/RA1+MHw5SmKfQ9Jgs+DuXIXSYJjo5MhwSOozpoiKIrMdLupGK3a3pJxMXRC0NZQF5twrYR3Pg645Jv3KRUZPDK0NbY7P2qOXHJAow6aLNoLRl3GJb2EF80iVHxIiCd2JetB7m739nSbhu2xm+XggiXmlR4fyIspI8wQGOA180GJ4xtNUe0O/R1NcS8OF3SDLbKlkQuJYmbojFkOOqBngGDii+mZbon/zI66ikLJ6JmUmhq//HprBP9g1q1Fi+2/uYYSbjqbn8QR1s00YGjYJZd9T3RstvWB2NaqqbmhQT6hO3vBL2CXpGCl5P0Jqv2nU7QUA4hgtQfkdd1PQoveAqrp6AYrq+sMpik8+ZZdUVyruvfhY+VhBuPRQDCkhFXKskKMFAfLKYxVQwF5F7f5/qE+hoA=" # DOCKER_USER
+    - secure: "B7grwtiNxXKHX7gZfIaKgrl+Km4EvxM75rCqdHKnxW/UBwfzArLLJ7PZsKujWHgV8QvVZAcFtvdpjvXcHOlzpHjZ+/vVaEKbBLEzZPfbnbLEWsr7EVElKxR5p0mvdv1j6WXrJCjvaswfm5c2YJIxX49z9ksXwPKsoCc6yucB0WY3uwg6Lw5QQjdgJpdBC1/Hp/F5S2kdKGMU05l3WRPNSHXDOm/erMHS//We3nl87Cm0ooO+NFwbMEDTzMNKpCfZw6jYNRIa+XSv9xJKDQKZzOdrXM2Z+kn6TX25eXbWDCkmXAU//2/bwpCzKQxGhZrqvVtgTDKOROrrCfHdeAlSe9qdfGNBTzq5uXTGi0RkoEJgWRrbUzP6G0b4/3Bd9fcKpifXwZerKMJmNpEHspxZMIiNJdyNyIOyVtnE9U90ePGsXTwvEOFwe2/7IUv++O/AYleyfNUUBh0I2UCdpMcY+2PNV6o5GPiif2SA3YJwLtlbDi17niVnjT16j2lwQv8oRjHA3VX0ngycUpwl23UO0s9B10f1Ff+U2GP7sp5nRcufG90Hu2cV7LLoOOBJ/X5zpi4m3Sba5RsomNEu+Q8QQWBoJA8nWpRQgPI5WOTDAcettGmZHd2LS4YJGnqBKRlONYpfuJxUiDzCVxzcy6gAC4LOlj0t2YM45GhiHHxU5+8=" # DOCKER_PASS
+    - COMMIT=${TRAVIS_COMMIT::8}
 
 before_install:
   - ./check-up-to-date-with-master.sh
@@ -59,3 +63,12 @@ install:
 script:
   - make test || { cat src/pg/test/regression.diffs; false; }
   - ./check-compatibility.sh
+
+after_success:
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+  - export REPO=splashblot/docker-crankshaft
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - docker build -f Dockerfile -t $REPO:$COMMIT .
+  - docker tag $REPO:$COMMIT $REPO:$TAG
+  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+  - docker push $REPO
