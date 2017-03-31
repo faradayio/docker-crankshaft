@@ -1,5 +1,9 @@
 language: c
 
+sudo: required
+services:
+  - docker
+
 env:
   global:
     - PAGER=cat
