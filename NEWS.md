@@ -1,4 +1,43 @@
-0.5.0 (2016-12-15)
+0.8.2 (2019-02-07)
+------------------
+* Update dependencies to match what it's being used in production.
+* Update travis to xenial, PG10 and 11, and postgis 2.6
+* Compatibility with PG11
+
+0.8.1 (2018-03-12)
+------------------
+* Adds improperly added version files
+
+0.8.0 (2018-03-12)
+------------------
+* Adds `CDB_MoransILocal*` functions that return spatial lag [#202](https://github.com/CartoDB/crankshaft/pull/202)
+
+0.7.0 (2018-02-23)
+------------------
+* Updated Moran and Markov documentation [#179](https://github.com/CartoDB/crankshaft/pull/179) [#155](https://github.com/CartoDB/crankshaft/pull/155)
+* Updated examples in documentation [#193](https://github.com/CartoDB/crankshaft/pull/193)
+* Better error management for empty values [#157](https://github.com/CartoDB/crankshaft/pull/157)
+* Added nonspatial kmeans with class framework [#150](https://github.com/CartoDB/crankshaft/pull/150)
+* Added multipolygons and geometry collections support to PIA analyssis [#165](https://github.com/CartoDB/crankshaft/pull/165)
+* Upgraded PySAL to v1.14.3 [#198](https://github.com/CartoDB/crankshaft/pull/198)
+
+0.6.1 (2017-11-23)
+------------------
+* Added VOLATILITY and PARALLEL categories to PostgreSQL functions [#183](https://github.com/CartoDB/crankshaft/pull/183)
+
+0.6.0 (2017-11-08)
+------------------
+* Adds new functions: `CDB_GWR` and `CDB_GWR_Predict`
+
+0.5.2 (2017-05-12)
+------------------
+* Fixes missing comma for dict creation #172
+
+0.5.1 (2016-12-12)
+------------------
+* Fixed problem with the upgrade file from 0.4.2 to 0.5.0 that hasn't changes that should be there (as per ethervoid).
+
+0.5.0 (2016-12-12)
 ------------------
 * Updated PULL_REQUEST_TEMPLATE
 * Fixed a bug that flips the order of the numerator in denominator for calculating using Moran Local Rate because previously the code sorted the keys alphabetically.
