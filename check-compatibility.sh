@@ -145,3 +145,5 @@ psql $DBNAME -c "SELECT * FROM release_function_signatures EXCEPT SELECT * FROM 
 # Fail if there's a signature mismatch / missing functions
 psql $DBNAME -c "SELECT * FROM release_function_signatures EXCEPT SELECT * FROM dev_function_signatures;" | fgrep '(0 rows)' \
     || die "Function signatures changed"
+
+psql -c "CREATE EXTENSION crankshaft CASCADE;"
