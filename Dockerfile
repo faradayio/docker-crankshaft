@@ -30,3 +30,6 @@ RUN chown postgres.postgres /var/run/postgresql/10-main.pg_stat_tmp -R
 WORKDIR /crankshaft
 ADD ./ /crankshaft
 RUN make install
+
+RUN /etc/init.d/postgresql restart 10 && \
+      bash check-compatibility.sh
