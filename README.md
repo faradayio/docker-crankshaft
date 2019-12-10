@@ -19,12 +19,16 @@ docker build -f Dockerfile -t crankshaft .
 
 To run:
 ```sh
-docker run --user postgres -p 5432:5432 crankshaft /usr/lib/postgresql/10/bin/postgres -D /var/lib/postgresql/10/main -c config_file=/etc/postgresql/10/main/postgresql.conf
+docker run --user postgres -p 5433:5432 crankshaft /usr/lib/postgresql/10/bin/postgres -D /var/lib/postgresql/10/main -c config_file=/etc/postgresql/10/main/postgresql.conf
 ```
 
 After running the above command, connect to the database by running:
 ```sh
-psql -U postgres -h 0.0.0.0 -p 5432
+psql -U postgres -h 0.0.0.0 -p 5433
+```
+or
+```sh
+psql 'postgres://postgres@127.0.0.1:5433/postgres'
 ```
 
 To access psql directly on the image (assuming postgres is running):
