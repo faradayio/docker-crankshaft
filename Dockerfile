@@ -32,4 +32,4 @@ ADD ./ /crankshaft
 RUN make install
 
 RUN /etc/init.d/postgresql restart 10 && \
-      bash check-compatibility.sh
+      bash check-compatibility.sh && bash setup-crankshaft.sh
