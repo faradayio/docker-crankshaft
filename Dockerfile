@@ -9,6 +9,8 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN add-apt-repository -y ppa:ubuntugis/ubuntugis-unstable && \
       apt-get update -y && \
       apt-get install -y \
+      gdal-data=2.4.2+dfsg-1~bionic0 \
+      libgdal20 \
       postgresql-server-dev-10 \
       postgresql-10-postgis-2.5 \
       postgresql-plpython-10 \
